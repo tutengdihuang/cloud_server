@@ -2,7 +2,6 @@ package case_set
 
 import (
 	"cloud_server/drivers/zero_model"
-	"fmt"
 	"testing"
 	"time"
 )
@@ -34,12 +33,12 @@ func Test_Aliyun_Runinstance(t *testing.T) {
 	respChan, errChan := serverAliyun.RunInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp: %+v", resp)
+		t.Logf("resp: %+v", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 }
@@ -51,9 +50,9 @@ func Test_Aliyun_Stopinstance(t *testing.T) {
 	respChan, errChan := serverAliyun.StopInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -63,13 +62,13 @@ func Test_Aliyun_Startinstance(t *testing.T) {
 	respChan, errChan := serverAliyun.StartInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
-		fmt.Printf("resp InstanceId: %+v", resp.InstanceId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp InstanceId: %+v", resp.InstanceId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 }
@@ -82,10 +81,10 @@ func Test_Aliyun_DescribeInstancesStatus(t *testing.T) {
 	respChan, errChan := serverAliyun.DescribeInstancesStatusWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.InsStatus)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.InsStatus)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -95,10 +94,10 @@ func Test_Aliyun_DescribeAllInstances(t *testing.T) {
 	respChan, errChan := serverAliyun.DescribeInstancesAllWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.Instances)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.Instances)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -110,10 +109,10 @@ func Test_Aliyun_DescribeInstancesByIDS(t *testing.T) {
 	respChan, errChan := serverAliyun.DescribeInstancesByIDsWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.Instances)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.Instances)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -127,9 +126,9 @@ func Test_Aliyun_ChangeInstancePassword(t *testing.T) {
 	respChan, errChan := serverAliyun.ChangeInstancePasswordWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+		t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -143,10 +142,10 @@ func Test_Aliyun_ReplaceSystemDiskWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.ReplaceSystemDiskWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
-		fmt.Printf("\n resp DiskId: %+v \n", resp.DiskId)
+		t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
+		t.Logf("\n resp DiskId: %+v \n", resp.DiskId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -158,9 +157,9 @@ func Test_Aliyun_DeleteInstancesWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.DeleteInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -172,9 +171,9 @@ func Test_Aliyun_AllocateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.AllocateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -188,9 +187,10 @@ func Test_Aliyun_AssociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.AssociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -203,9 +203,9 @@ func Test_Aliyun_DescribeEipAddressesWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.DescribeEipAddressesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -218,9 +218,9 @@ func Test_Aliyun_UnassociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.UnassociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -232,9 +232,9 @@ func Test_Aliyun_ReleaseEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.ReleaseEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -248,9 +248,9 @@ func Test_Aliyun_CreateImageWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.CreateImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -262,9 +262,9 @@ func Test_Aliyun_DescribeImagesWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.DescribeImagesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -277,9 +277,9 @@ func Test_Aliyun_CopyImageWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.CopyImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -291,9 +291,9 @@ func Test_Aliyun_DeleteImageWithChan(t *testing.T) {
 	respChan, errChan := serverAliyun.DeleteImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }

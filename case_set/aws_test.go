@@ -2,7 +2,6 @@ package case_set
 
 import (
 	"cloud_server/drivers/zero_model"
-	"fmt"
 	"io/ioutil"
 	"testing"
 	"time"
@@ -38,12 +37,12 @@ func Test_AWS_Runinstance(t *testing.T) {
 	respChan, errChan := serverAWS.RunInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp: %+v", resp)
+		t.Logf("resp: %+v", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 	time.Sleep(1 * time.Second)
@@ -57,9 +56,9 @@ func Test_AWS_Stopinstance(t *testing.T) {
 	respChan, errChan := serverAWS.StopInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -70,13 +69,13 @@ func Test_AWS_Startinstance(t *testing.T) {
 	respChan, errChan := serverAWS.StartInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
-		fmt.Printf("resp InstanceId: %+v", resp.InstanceId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp InstanceId: %+v", resp.InstanceId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 }
@@ -93,10 +92,10 @@ func Test_AWS_DescribeInstancesStatus(t *testing.T) {
 	respChan, errChan := serverAWS.DescribeInstancesStatusWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.InsStatus)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.InsStatus)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -106,13 +105,13 @@ func Test_AWS_DescribeAllInstances(t *testing.T) {
 	respChan, errChan := serverAWS.DescribeInstancesAllWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp : %#v \n", len(resp.Instances))
+		t.Logf("resp : %#v \n", len(resp.Instances))
 		for _, v := range resp.Instances {
-			fmt.Printf("resp : %#v \n", v)
+			t.Logf("resp : %#v \n", v)
 
 		}
 	case err := <-errChan:
-		fmt.Printf("err====: %#v", err)
+		t.Logf("err====: %#v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -129,12 +128,12 @@ func Test_AWS_DescribeInstancesByIDS(t *testing.T) {
 	respChan, errChan := serverAWS.DescribeInstancesByIDsWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %#v \n", resp.RequestId)
+		t.Logf("\nresp RequestId1: %#v \n", resp.RequestId)
 		for _, v := range resp.Instances {
-			fmt.Printf("resp : %#v \n", v)
+			t.Logf("resp : %#v \n", v)
 		}
 	case err := <-errChan:
-		fmt.Printf("err====: %#v", err)
+		t.Logf("err====: %#v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -157,9 +156,9 @@ func Test_AWS_ChangeInstancePassword(t *testing.T) {
 	respChan, errChan := serverAWS.ChangeInstancePasswordWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+		t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -179,9 +178,9 @@ func Test_AWS_DeleteInstancesWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.DeleteInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -195,9 +194,9 @@ func Test_AWS_AllocateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.AllocateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -211,9 +210,9 @@ func Test_AWS_AssociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.AssociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -228,13 +227,13 @@ func Test_AWS_DescribeEipAddressesWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.DescribeEipAddressesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 		for _, v := range resp.EipInfo {
-			fmt.Printf("\n \n resp RequestId lenght: %+v \n", v)
+			t.Logf("\n \n resp RequestId lenght: %+v \n", v)
 
 		}
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -247,9 +246,9 @@ func Test_AWS_UnassociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.UnassociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -267,9 +266,9 @@ func Test_AWS_ReleaseEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.ReleaseEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -285,9 +284,9 @@ func Test_AWS_CreateImageWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.CreateImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -300,9 +299,9 @@ func Test_AWS_DescribeImagesWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.DescribeImagesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -317,9 +316,9 @@ func Test_AWS_CopyImageWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.CopyImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v \n", err)
+		t.Logf("err: %+v \n", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -332,9 +331,9 @@ func Test_AWS_DeleteImageWithChan(t *testing.T) {
 	respChan, errChan := serverAWS.DeleteImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }

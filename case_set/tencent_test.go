@@ -2,7 +2,6 @@ package case_set
 
 import (
 	"cloud_server/drivers/zero_model"
-	"fmt"
 	"testing"
 	"time"
 )
@@ -34,12 +33,12 @@ func Test_Tencent_Runinstance(t *testing.T) {
 	respChan, errChan := serverTencent.RunInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp: %+v", resp)
+		t.Logf("resp: %+v", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 }
@@ -51,9 +50,9 @@ func Test_Tencent_Stopinstance(t *testing.T) {
 	respChan, errChan := serverTencent.StopInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -63,13 +62,13 @@ func Test_Tencent_Startinstance(t *testing.T) {
 	respChan, errChan := serverTencent.StartInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("resp RequestId: %+v", resp.RequestId)
-		fmt.Printf("resp InstanceId: %+v", resp.InstanceId)
+		t.Logf("resp RequestId: %+v", resp.RequestId)
+		t.Logf("resp InstanceId: %+v", resp.InstanceId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 		if err == nil && cap(respChan) > 0 {
 			resp := <-respChan
-			fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+			t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 		}
 	}
 }
@@ -80,10 +79,10 @@ func Test_Tencent_DescribeInstancesStatus(t *testing.T) {
 	respChan, errChan := serverTencent.DescribeInstancesStatusWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.InsStatus)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.InsStatus)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -93,10 +92,10 @@ func Test_Tencent_DescribeAllInstances(t *testing.T) {
 	respChan, errChan := serverTencent.DescribeInstancesAllWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %#v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %#v \n", resp.Instances)
+		t.Logf("\nresp RequestId1: %#v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %#v \n", resp.Instances)
 	case err := <-errChan:
-		fmt.Printf("err====: %#v", err)
+		t.Logf("err====: %#v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -106,10 +105,10 @@ func Test_Tencent_DescribeInstancesByIDS(t *testing.T) {
 	respChan, errChan := serverTencent.DescribeInstancesByIDsWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\nresp RequestId1: %+v \n", resp.RequestId)
-		fmt.Printf("resp InsStatus: %+v \n", resp.Instances)
+		t.Logf("\nresp RequestId1: %+v \n", resp.RequestId)
+		t.Logf("resp InsStatus: %+v \n", resp.Instances)
 	case err := <-errChan:
-		fmt.Printf("err====: %+v", err)
+		t.Logf("err====: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -123,9 +122,9 @@ func Test_Tencent_ChangeInstancePassword(t *testing.T) {
 	respChan, errChan := serverTencent.ChangeInstancePasswordWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
+		t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -139,10 +138,10 @@ func Test_Tencent_ReplaceSystemDiskWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.ReplaceSystemDiskWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp.RequestId)
-		fmt.Printf("\n resp DiskId: %+v \n", resp.DiskId)
+		t.Logf("\n resp RequestId: %+v \n", resp.RequestId)
+		t.Logf("\n resp DiskId: %+v \n", resp.DiskId)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -155,9 +154,9 @@ func Test_Tencent_DeleteInstancesWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.DeleteInstancesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -169,9 +168,9 @@ func Test_Tencent_AllocateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.AllocateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -184,9 +183,9 @@ func Test_Tencent_AssociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.AssociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 }
 
@@ -200,10 +199,10 @@ func Test_Tencent_DescribeEipAddressesWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.DescribeEipAddressesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
-		fmt.Printf("\n resp RequestId lenght: %+v \n", len(resp.EipInfo))
+		t.Logf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId lenght: %+v \n", len(resp.EipInfo))
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -216,9 +215,9 @@ func Test_Tencent_UnassociateEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.UnassociateEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -231,9 +230,9 @@ func Test_Tencent_ReleaseEipAddressWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.ReleaseEipAddressWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -247,9 +246,9 @@ func Test_Tencent_CreateImageWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.CreateImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -261,9 +260,9 @@ func Test_Tencent_DescribeImagesWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.DescribeImagesWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -277,9 +276,9 @@ func Test_Tencent_CopyImageWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.CopyImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v \n", err)
+		t.Logf("err: %+v \n", err)
 	}
 	time.Sleep(1 * time.Second)
 }
@@ -292,9 +291,9 @@ func Test_Tencent_DeleteImageWithChan(t *testing.T) {
 	respChan, errChan := serverTencent.DeleteImageWithChan(request)
 	select {
 	case resp := <-respChan:
-		fmt.Printf("\n resp RequestId: %+v \n", resp)
+		t.Logf("\n resp RequestId: %+v \n", resp)
 	case err := <-errChan:
-		fmt.Printf("err: %+v", err)
+		t.Logf("err: %+v", err)
 	}
 	time.Sleep(1 * time.Second)
 }
