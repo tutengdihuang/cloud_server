@@ -29,3 +29,5 @@ testdata/*
 
 case_set/key_secret.go
 .idea
+
+key_secret.go
