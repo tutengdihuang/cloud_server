@@ -103,9 +103,9 @@ func Test_Aliyun_DescribeAllInstances(t *testing.T) {
 }
 func Test_Aliyun_DescribeInstancesByIDS(t *testing.T) {
 	request := new(zero_model.DescribeInstancesByIDsRequest)
-	request.InstanceIds = append(request.InstanceIds, "i-bp1aoh75ith0gxt9lz0u")
-	request.InstanceIds = append(request.InstanceIds, "i-bp15xwr9cmuqceodmixk")
-	request.InstanceIds = append(request.InstanceIds, "i-bp14f84hogliwilyn6u1")
+	request.InstanceIds = append(request.InstanceIds, "i-bp1gwm9ule5bv38ys53l")
+	//request.InstanceIds = append(request.InstanceIds, "i-bp15xwr9cmuqceodmixk")
+	//request.InstanceIds = append(request.InstanceIds, "i-bp14f84hogliwilyn6u1")
 	respChan, errChan := serverAliyun.DescribeInstancesByIDsWithChan(request)
 	select {
 	case resp := <-respChan:

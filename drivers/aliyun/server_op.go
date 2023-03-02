@@ -278,8 +278,8 @@ func (this *ServerOp) DescribeInstancesByIDsWithChan(req *zero_model.DescribeIns
 				var unit zero_model.DescribeInstance
 				unit.InstanceId = v.InstanceId
 				unit.InstanceName = v.InstanceName
-				unit.PrivateIpAddress = append(unit.PrivateIpAddress, v.InnerIpAddress.IpAddress...)
-				unit.PublicIpAddress = append(unit.PrivateIpAddress, v.PublicIpAddress.IpAddress...)
+				unit.PrivateIpAddress = append(unit.PrivateIpAddress, v.VpcAttributes.PrivateIpAddress.IpAddress...)
+				unit.PublicIpAddress = append(unit.PublicIpAddress, v.PublicIpAddress.IpAddress...)
 				status, ok := zero_model.AlyInstanceStatusMapToInsStatusList[v.Status]
 				if !ok {
 					status = zero_model.InsStatus_UNKNOWN
