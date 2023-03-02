@@ -71,7 +71,8 @@ func (this *ServerOp) DescribeInstancesStatusWithChan(req *zero_model.DescribeIn
 	createRequest := ecs.CreateDescribeInstancesRequest()
 	var strBuilder strings.Builder
 	strBuilder.WriteString("[")
-	for i, v := range req.InstanceIds {
+	for i, vIns := range req.InstanceIds {
+		v := vIns
 		strBuilder.WriteString("\"")
 		strBuilder.WriteString(v)
 		strBuilder.WriteString("\"")
@@ -94,7 +95,8 @@ func (this *ServerOp) DescribeInstancesStatusWithChan(req *zero_model.DescribeIn
 				return
 			}
 			resp.RequestId = data.RequestId
-			for _, v := range data.Instances.Instance {
+			for _, vIns := range data.Instances.Instance {
+				v := vIns
 				var insStatus zero_model.InstanceStatus
 				insStatus.InstanceId = v.InstanceId
 				insStatus.Status = zero_model.AlyInstanceStatusMapToInsStatusList[v.Status]
@@ -131,7 +133,8 @@ func (this *ServerOp) RunInstancesWithChan(req *zero_model.RunInstanceWithChanRe
 	runReq.SystemDiskCategory = req.SystemDiskCategory
 	runReq.SystemDiskSize = req.SystemDiskSize
 	var tagSet []ecs.RunInstancesTag
-	for k, v := range req.Tag {
+	for k, vIns := range req.Tag {
+		v := vIns
 		var tagOne = ecs.RunInstancesTag{}
 		tagOne.Key = k
 		tagOne.Value = v
@@ -152,7 +155,8 @@ func (this *ServerOp) RunInstancesWithChan(req *zero_model.RunInstanceWithChanRe
 				return
 			}
 			resp.RequestId = respData.RequestId
-			for _, id := range respData.InstanceIdSets.InstanceIdSet {
+			for _, idIns := range respData.InstanceIdSets.InstanceIdSet {
+				id := idIns
 				resp.InstanceIdSets = append(resp.InstanceIdSets, id)
 			}
 			resp.TradePrice = respData.TradePrice
@@ -224,7 +228,8 @@ func (this *ServerOp) DescribeInstancesAllWithChan(req *zero_model.DescribeInsta
 			resp.RequestId = response.RequestId
 		}
 
-		for _, v := range allInstances {
+		for _, vIns := range allInstances {
+			v := vIns
 			var unit zero_model.DescribeInstance
 			unit.InstanceId = v.InstanceId
 			unit.InstanceName = v.InstanceName
@@ -274,7 +279,8 @@ func (this *ServerOp) DescribeInstancesByIDsWithChan(req *zero_model.DescribeIns
 				return
 			}
 			resp.RequestId = data.RequestId
-			for _, v := range data.Instances.Instance {
+			for _, vIns := range data.Instances.Instance {
+				v := vIns
 				var unit zero_model.DescribeInstance
 				unit.InstanceId = v.InstanceId
 				unit.InstanceName = v.InstanceName
@@ -479,7 +485,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 		return respChan, errChan
 	}
 	var strBuilder0 strings.Builder
-	for i, v := range req.AllocationIds {
+	for i, vIns := range req.AllocationIds {
+		v := vIns
 		strBuilder0.WriteString(v)
 		if i >= len(req.AllocationIds)-1 {
 			break
@@ -499,7 +506,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 		defer close(respChan)
 		defer close(errChan)
 		var strBuilder strings.Builder
-		for i, v := range req.PublicIpsOrIPIds {
+		for i, vIns := range req.PublicIpsOrIPIds {
+			v := vIns
 			strBuilder.WriteString(v)
 			if i >= len(req.PublicIpsOrIPIds)-1 {
 				break
@@ -515,7 +523,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 				errChan <- err
 				return
 			}
-			for _, v := range response.EipAddresses.EipAddress {
+			for _, vIns := range response.EipAddresses.EipAddress {
+				v := vIns
 				var eip zero_model.Eip
 				eip.EipAddress = v.IpAddress
 				eip.AllocationId = v.AllocationId
@@ -618,7 +627,8 @@ func (this *ServerOp) DescribeImagesWithChan(req *zero_model.DescribeImagesReque
 				errChan <- err
 				return
 			}
-			for _, v := range response.Images.Image {
+			for _, vIns := range response.Images.Image {
+				v := vIns
 				var imageUnit zero_model.Image
 				imageUnit.ImageId = v.ImageId
 				var status zero_model.ImageStatus
@@ -712,7 +722,8 @@ func (this *ServerOp) DeleteImageWithChan(req *zero_model.DeleteImagesRequest) (
 	utils.Go(func() {
 		defer close(respChan)
 		defer close(errChan)
-		for i, v := range req.ImageIds {
+		for i, vIns := range req.ImageIds {
+			v := vIns
 			createRequest.ImageId = v
 			respData, errData := this.client.DeleteImage(createRequest)
 			if errData != nil {

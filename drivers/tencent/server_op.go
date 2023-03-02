@@ -51,7 +51,8 @@ func (this *ServerOp) StartInstancesWithChan(req *zero_model.StartInstancesWithC
 	resp := new(zero_model.StartInstancesWithChanResponse)
 
 	startReq := ecs.NewStartInstancesRequest()
-	for _, v := range req.InstanceIds {
+	for _, vIns := range req.InstanceIds {
+		v := vIns
 		startReq.InstanceIds = append(startReq.InstanceIds, &v)
 	}
 
@@ -75,7 +76,8 @@ func (this *ServerOp) DescribeInstancesStatusWithChan(req *zero_model.DescribeIn
 	resp := new(zero_model.DescribeInstancesStatusResponse)
 
 	createRequest := ecs.NewDescribeInstancesStatusRequest()
-	for _, v := range req.InstanceIds {
+	for _, vIns := range req.InstanceIds {
+		v := vIns
 		createRequest.InstanceIds = append(createRequest.InstanceIds, &v)
 	}
 
@@ -88,7 +90,8 @@ func (this *ServerOp) DescribeInstancesStatusWithChan(req *zero_model.DescribeIn
 			return
 		}
 		resp.RequestId = *respData.Response.RequestId
-		for _, v := range respData.Response.InstanceStatusSet {
+		for _, vIns := range respData.Response.InstanceStatusSet {
+			v := vIns
 			var unit zero_model.InstanceStatus
 			unit.InstanceId = *v.InstanceId
 			status, ok := zero_model.TencentInstanceStatusMapToInsStatusList[*v.InstanceState]
@@ -161,7 +164,8 @@ func (this *ServerOp) RunInstancesWithChan(req *zero_model.RunInstanceWithChanRe
 		var tagSet = new(ecs.TagSpecification)
 		ins := "instance"
 		tagSet.ResourceType = &ins
-		for k, v := range req.Tag {
+		for k, vIns := range req.Tag {
+			v := vIns
 			var tagOne = new(ecs.Tag)
 			tagOne.Key = &k
 			tagOne.Value = &v
@@ -186,7 +190,8 @@ func (this *ServerOp) RunInstancesWithChan(req *zero_model.RunInstanceWithChanRe
 		}
 		var respFeedBack zero_model.RunInstanceWithChanResponse
 		respFeedBack.RequestId = *rspData.Response.RequestId
-		for _, id := range rspData.Response.InstanceIdSet {
+		for _, idIns := range rspData.Response.InstanceIdSet {
+			id := idIns
 			respFeedBack.InstanceIdSets = append(respFeedBack.InstanceIdSets, *id)
 		}
 		respChan <- &respFeedBack
@@ -237,15 +242,18 @@ func (this *ServerOp) DescribeInstancesAllWithChan(req *zero_model.DescribeInsta
 				return
 			}
 
-			for _, v := range rspData.Response.InstanceSet {
+			for _, vIns := range rspData.Response.InstanceSet {
+				v := vIns
 				var unit zero_model.DescribeInstance
 
 				unit.InstanceId = *v.InstanceId
 				unit.InstanceName = *v.InstanceName
-				for _, v1 := range v.PublicIpAddresses {
+				for _, vInsIn1 := range v.PublicIpAddresses {
+					v1 := vInsIn1
 					unit.PublicIpAddress = append(unit.PublicIpAddress, *v1)
 				}
-				for _, v2 := range v.PrivateIpAddresses {
+				for _, vInsIn2 := range v.PrivateIpAddresses {
+					v2 := vInsIn2
 					unit.PrivateIpAddress = append(unit.PrivateIpAddress, *v2)
 				}
 				status, ok := zero_model.TencentInstanceStatusMapToInsStatusList[*v.InstanceState]
@@ -278,7 +286,8 @@ func (this *ServerOp) DescribeInstancesByIDsWithChan(req *zero_model.DescribeIns
 	resp := new(zero_model.DescribeInstancesByIDsResponse)
 
 	createRequest := ecs.NewDescribeInstancesRequest()
-	for _, v := range req.InstanceIds {
+	for _, vIns := range req.InstanceIds {
+		v := vIns
 		createRequest.InstanceIds = append(createRequest.InstanceIds, &v)
 	}
 
@@ -289,15 +298,18 @@ func (this *ServerOp) DescribeInstancesByIDsWithChan(req *zero_model.DescribeIns
 			return
 		}
 		resp.RequestId = *rspData.Response.RequestId
-		for _, v := range rspData.Response.InstanceSet {
+		for _, vIns := range rspData.Response.InstanceSet {
+			v := vIns
 			var unit zero_model.DescribeInstance
 
 			unit.InstanceId = *v.InstanceId
 			unit.InstanceName = *v.InstanceName
-			for _, v1 := range v.PublicIpAddresses {
+			for _, v1Ins := range v.PublicIpAddresses {
+				v1 := v1Ins
 				unit.PublicIpAddress = append(unit.PublicIpAddress, *v1)
 			}
-			for _, v2 := range v.PrivateIpAddresses {
+			for _, v2Ins := range v.PrivateIpAddresses {
+				v2 := v2Ins
 				unit.PrivateIpAddress = append(unit.PrivateIpAddress, *v2)
 			}
 			status, ok := zero_model.TencentInstanceStatusMapToInsStatusList[*v.InstanceState]
@@ -322,7 +334,8 @@ func (this *ServerOp) StopInstancesWithChan(req *zero_model.StopInstancesWithCha
 	if req.ForceStop == true {
 		createRequest.ForceStop = &req.ForceStop
 	}
-	for _, v := range req.InstanceIds {
+	for _, vIns := range req.InstanceIds {
+		v := vIns
 		createRequest.InstanceIds = append(createRequest.InstanceIds, &v)
 	}
 
@@ -376,7 +389,8 @@ func (this *ServerOp) DeleteInstancesWithChan(req *zero_model.DeleteInstancesReq
 		defer close(errChan)
 		createRequest.InstanceIds = make([]*string, 1)
 		var strBuilder strings.Builder
-		for i, v := range req.InstanceIds {
+		for i, vIns := range req.InstanceIds {
+			v := vIns
 			createRequest.InstanceIds[0] = &v
 			respData, errData := this.client.TerminateInstances(createRequest)
 			if errData != nil {
@@ -465,7 +479,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 
 		if req.PublicIpsOrIPIds != nil && len(req.PublicIpsOrIPIds) > 0 {
 			createRequest.AddressIds = make([]*string, 1)
-			for _, v := range req.PublicIpsOrIPIds {
+			for _, vInsOut := range req.PublicIpsOrIPIds {
+				v := vInsOut
 				createRequest.AddressIds[0] = &v
 				respData, errData := this.vpcClient.DescribeAddresses(createRequest)
 				if errData != nil {
@@ -478,7 +493,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 				}
 				resp.RequestId = *respData.Response.RequestId
 
-				for _, v := range respData.Response.AddressSet {
+				for _, vInsIn := range respData.Response.AddressSet {
+					v := vInsIn
 					var eip zero_model.Eip
 					eip.EipAddress = *v.AddressIp
 					if v.AddressStatus != nil {
@@ -515,7 +531,8 @@ func (this *ServerOp) DescribeEipAddressesWithChan(req *zero_model.DescribeEipAd
 					return
 				}
 				resp.RequestId = *respData.Response.RequestId
-				for _, v := range respData.Response.AddressSet {
+				for _, vIns := range respData.Response.AddressSet {
+					v := vIns
 					var eip zero_model.Eip
 					eip.EipAddress = *v.AddressIp
 					if v.AddressStatus != nil {
@@ -621,7 +638,8 @@ func (this *ServerOp) DescribeImagesWithChan(req *zero_model.DescribeImagesReque
 				return
 			}
 			resp.RequestId = *respData.Response.RequestId
-			for _, v := range respData.Response.ImageSet {
+			for _, vIns := range respData.Response.ImageSet {
+				v := vIns
 				var unit zero_model.Image
 				unit.ImageId = *v.ImageId
 				var status zero_model.ImageStatus
@@ -688,7 +706,8 @@ func (this *ServerOp) CopyImageWithChan(req *zero_model.CopyImageRequest) (<-cha
 		}
 
 		resp.RequestId = *respData.Response.RequestId
-		for _, v := range respData.Response.ImageSet {
+		for _, vIns := range respData.Response.ImageSet {
+			v := vIns
 			resp.ImageId = *v.ImageId
 		}
 		respChan <- resp
@@ -704,7 +723,8 @@ func (this *ServerOp) DeleteImageWithChan(req *zero_model.DeleteImagesRequest) (
 	utils.Go(func() {
 		defer close(respChan)
 		defer close(errChan)
-		for _, v := range req.ImageIds {
+		for _, vIns := range req.ImageIds {
+			v := vIns
 			createRequest.ImageIds = append(createRequest.ImageIds, &v)
 		}
 		respData, errData := this.client.DeleteImages(createRequest)
